@@ -9,6 +9,7 @@ const prisma = new PrismaClient();
 app.use(cors());
 app.use(express.json());
 app.use('/partidas', partidaRoutes);
+console.log("atualização do sistema")
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
