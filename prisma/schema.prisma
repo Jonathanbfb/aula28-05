@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+ 
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id        Int       @id @default(autoincrement())
+  nome      String
+  partidasVencidas  Partida[] @relation("VencedorPartida")
+  partidasPerdidas  Partida[] @relation("PerdedorPartida")
+}
+
+model Partida {
+  id              Int       @id @default(autoincrement())
+  vencedorId      Int?      
+  perdedorId      Int?      
+  vencedor        Usuario?  @relation("VencedorPartida", fields: [vencedorId], references: [id])
+  perdedor        Usuario?  @relation("PerdedorPartida", fields: [perdedorId], references: [id])
+  empate          Boolean   @default(false)
+  jogadas         Int
+  dataHora        DateTime  @default(now())
+}
+
